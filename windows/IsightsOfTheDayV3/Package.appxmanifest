@@ -11,7 +11,8 @@
     Publisher="CN=Anagh"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="bfd2d32f-0fed-4dfa-821a-52d7e1f618d8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="bfd2d32f-0fed-4dfa-821a-52d7e1f618d8"
+    PhonePublisherId="00000000-0000-0000-0000-000000000000" />
 
   <Properties>
     <DisplayName>IsightsOfTheDayV3</DisplayName>
@@ -24,7 +25,7 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
 
   <Applications>
@@ -38,9 +39,16 @@
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="IsightsOfTheDayV3"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="com.windowsinsights">
+            <uap:DisplayName>Test OAuth App</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

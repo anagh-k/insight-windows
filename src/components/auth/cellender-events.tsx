@@ -4,6 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import authStore, {UserCredentials} from '../../store/AuthEnticationStore';
 import {Box, Pressable, Text, ScrollView} from 'native-base';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Example({name}: any) {
   return (
@@ -59,7 +60,7 @@ export default function CalenderEvents() {
     let user: UserCredentials = authStore.getState();
     setUserDetails(user);
     const url =
-      'https://www.googleapis.com/calendar/v3/calendars/c_glscvgeems1nqm7tfhce276jm0%40group.calendar.google.com/events?timeMax=2023-11-19T22%3A00%3A00-07%3A00&timeMin=2023-11-19T00%3A00%3A00-07%3A00&key=AIzaSyCPKrZqSllcWqfcyDavmo-PFbgiFgz2Cdg';
+      'https://www.googleapis.com/calendar/v3/calendars/c_glscvgeems1nqm7tfhce276jm0%40group.calendar.google.com/events?timeMax=2023-11-19T22%3A00%3A00-07%3A00&timeMin=2023-11-19T00%3A00%3A00-07%3A00&key=AIzaSyAkDHQiFmSqKUvlUE_ulHaYRUDw5MNphc8';
     const token = user.accessToken;
 
     fetch(url, {
@@ -71,19 +72,25 @@ export default function CalenderEvents() {
       },
     })
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
+      .then(async data => {
+        if (!data.items) {
+          await AsyncStorage.clear();
+        }
         setEventDetails(data.items);
       })
-      .catch(error => console.error('Error:', error));
+      .catch(async error => {
+        await AsyncStorage.clear();
+        console.error('Error:', error);
+      });
   }, []);
 
   authStore.subscribe(() => {});
   return (
     <ScrollView>
-      {eventDetails.map((x: any) => (
-        <Example name={x.summary} key={x.summary} />
-      ))}
+      {eventDetails &&
+        eventDetails.map((x: any) => (
+          <Example name={x.summary} key={x.summary} />
+        ))}
     </ScrollView>
   );
 }

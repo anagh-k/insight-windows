@@ -26,10 +26,7 @@ const authentication = createSlice({
       console.log(action);
       state.accessToken = action.payload;
       state.isLoggedIn = true;
-      AsyncStorage.setItem(
-        '@usercreedentials:key',
-        JSON.stringify(UserCredentials),
-      );
+      AsyncStorage.setItem('@usercreedentials:key', action.payload);
 
       // state.value += 1;
     },
